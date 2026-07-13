@@ -23,6 +23,17 @@ def greet():
     # Return a JSON response indicating success.
     return jsonify({"message": "Note saved: " + note})
 
+# Route that reads all notes from the file and returns them.
+@app.route("/notes")
+def get_notes():
+    notes = []
+    try:
+        with open("notes.txt", "r") as file:
+            for line in file:
+                notes.append(line.strip())
+    except FileNotFoundError:
+        notes = []
+    return jsonify({"notes": notes})
 
 if __name__ == "__main__":
     app.run(debug=True)
