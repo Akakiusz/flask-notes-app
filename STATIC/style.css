@@ -37,10 +37,19 @@ button {
     justify-content: space-between;
     align-items: center;
 }
-/* Style for delete buttons inside the notes list */
+/* Shared style for buttons inside the notes list */
 #notesList button {
     margin-left: 10px;
     padding: 4px 10px;
     font-size: 14px;
+}
+
+/* Edit button — blue */
+.edit-btn {
+    background-color: #2196F3;
+}
+
+/* Delete button — red */
+.delete-btn {
     background-color: #e74c3c;
 }
