@@ -41,12 +41,38 @@ function loadNotes() {
         .then(function (data) {
             // Clear the list first.
             notesList.innerHTML = "";
-            // Add each note as a list item.
-            data.notes.forEach(function (note) {
+            // Add each note as a list item with a delete button.
+            data.notes.forEach(function (note, index) {
                 const li = document.createElement("li");
                 li.textContent = note;
+
+                // Create a delete button for this note.
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", function () {
+                    deleteNote(index);
+                });
+
+                // Add the button to the list item.
+                li.appendChild(deleteButton);
                 notesList.appendChild(li);
             });
+        });
+}
+
+// Function that tells the backend to delete a note by its index.
+function deleteNote(index) {
+    fetch("/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ index: index })
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            // Refresh the list after deleting.
+            loadNotes();
         });
 }
 
