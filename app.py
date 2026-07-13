@@ -17,7 +17,13 @@ def greet():
     # Validation: check if the name is empty.
     if name.strip() == "":
         return jsonify({"message": "Name cannot be empty."}), 400
-    return jsonify({"message": "Hello, " + name})
+    
+        # Save the note to a text file (append mode).
+    with open("notes.txt", "a") as file:
+        file.write(note + "\n")
+    # Return a JSON response indicating success.
+    return jsonify({"message": "Note saved: " + note})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
