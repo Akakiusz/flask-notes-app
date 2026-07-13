@@ -66,3 +66,11 @@ button {
 .delete-btn {
     background-color: #e74c3c;
 }
+
+/* Style for the footer */
+footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+}
