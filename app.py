@@ -61,5 +61,36 @@ def delete_note():
 
     return jsonify({"message": "Note deleted."})
 
+# Route that edits a note by its position (index).
+@app.route("/edit", methods=["POST"])
+def edit_note():
+    data = request.get_json()
+    index = data["index"]
+    new_text = data["new_text"]
+
+    # Validation: check if the new text is empty.
+    if new_text.strip() == "":
+        return jsonify({"message": "Note cannot be empty."}), 400
+
+    # Read all notes from the file.
+    notes = []
+    try:
+        with open("notes.txt", "r") as file:
+            for line in file:
+                notes.append(line.strip())
+    except FileNotFoundError:
+        notes = []
+
+    # Replace the note at the given index (if it exists).
+    if 0 <= index < len(notes):
+        notes[index] = new_text.strip()
+
+    # Write all notes back to the file.
+    with open("notes.txt", "w") as file:
+        for note in notes:
+            file.write(note + "\n")
+
+    return jsonify({"message": "Note updated."})
+
 if __name__ == "__main__":
     app.run(debug=True)
