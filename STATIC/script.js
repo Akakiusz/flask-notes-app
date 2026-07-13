@@ -8,6 +8,12 @@ button.addEventListener("click", function () {
     // Read the text the user typed.
     const name = input.value;
 
+     // Validation: check if the field is empty.
+    if (name.trim() === "") {
+        responseArea.textContent = "Please enter your name.";
+        return;
+    }
+
     // Send the text to the backend as JSON.
     fetch("/greet", {
         method: "POST",
