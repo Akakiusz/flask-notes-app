@@ -2,7 +2,5 @@ ark
 hello there
 how are you
 hi there
-hi there
-hi there
 jestem w polsce
 nie wiem jak dlugo
