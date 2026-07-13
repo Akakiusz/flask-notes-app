@@ -26,3 +26,10 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+/* Style for delete buttons inside the notes list */
+#notesList button {
+    margin-left: 10px;
+    padding: 4px 10px;
+    font-size: 14px;
+    background-color: #e74c3c;
+}
