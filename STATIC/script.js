@@ -5,9 +5,8 @@ const responseArea = document.getElementById("response");
 // Find the notes list by its id.
 const notesList = document.getElementById("notesList");
 
-// When the button is clicked, run this function.
+// When the button is clicked, add a new note.
 button.addEventListener("click", function () {
-    // Read the text the user typed.
     const name = input.value;
 
     // Validation: check if the field is empty.
@@ -16,7 +15,7 @@ button.addEventListener("click", function () {
         return;
     }
 
-    // Send the text to the backend as JSON.
+    // Send the note to the backend as JSON.
     fetch("/greet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -27,8 +26,8 @@ button.addEventListener("click", function () {
         })
         .then(function (data) {
             responseArea.textContent = data.message;
-            input.value = "";      // clear the input field
-            loadNotes();           // refresh the notes list
+            input.value = "";
+            loadNotes();
         });
 });
 
@@ -39,29 +38,27 @@ function loadNotes() {
             return response.json();
         })
         .then(function (data) {
-            // Clear the list first.
             notesList.innerHTML = "";
-            // Add each note as a list item with a delete button.
-            data.notes.forEach(function (note, index) {
+            data.notes.forEach(function (note) {
                 const li = document.createElement("li");
-                li.textContent = note;
+                li.textContent = note.content;
 
-              // Create an edit button for this note.
+                // Edit button.
                 const editButton = document.createElement("button");
                 editButton.textContent = "Edit";
                 editButton.className = "edit-btn";
                 editButton.addEventListener("click", function () {
-                    editNote(index, note);
+                    editNote(note.id, note.content);
                 });
-                // Create a delete button for this note.
+
+                // Delete button.
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
                 deleteButton.className = "delete-btn";
                 deleteButton.addEventListener("click", function () {
-                    deleteNote(index);
+                    deleteNote(note.id);
                 });
 
-                // Add the button to the list item.
                 li.appendChild(editButton);
                 li.appendChild(deleteButton);
                 notesList.appendChild(li);
@@ -69,42 +66,36 @@ function loadNotes() {
         });
 }
 
-// Function that tells the backend to delete a note by its index.
-function deleteNote(index) {
+// Function that deletes a note by its id.
+function deleteNote(id) {
     fetch("/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ index: index })
+        body: JSON.stringify({ id: id })
     })
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            // Refresh the list after deleting.
             loadNotes();
         });
 }
 
-// Function that asks for new text and tells the backend to edit a note.
-function editNote(index, oldText) {
-    // Show a small window to enter the new text (pre-filled with the old one).
+// Function that edits a note by its id.
+function editNote(id, oldText) {
     const newText = prompt("Edit your note:", oldText);
-
-    // If the user clicked Cancel, prompt returns null — do nothing.
     if (newText === null) {
         return;
     }
-
     fetch("/edit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ index: index, new_text: newText })
+        body: JSON.stringify({ id: id, new_text: newText })
     })
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            // Refresh the list after editing.
             loadNotes();
         });
 }
