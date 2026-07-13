@@ -1,0 +1,2 @@
+# Requirements for the Flask Notes App
+Flask==3.1.2
