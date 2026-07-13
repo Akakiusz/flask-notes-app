@@ -14,6 +14,9 @@ def home():
 def greet():
     data = request.get_json()
     name = data["name"]
+# Validation: check if the name is empty.
+    if name.strip() == "":
+        return jsonify({"message": "Name cannot be empty."}), 400
     return jsonify({"message": "Hello, " + name})
 
 if __name__ == "__main__":
