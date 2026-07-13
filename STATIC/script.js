@@ -46,15 +46,17 @@ function loadNotes() {
                 const li = document.createElement("li");
                 li.textContent = note;
 
-                  // Create an edit button for this note.
+              // Create an edit button for this note.
                 const editButton = document.createElement("button");
                 editButton.textContent = "Edit";
+                editButton.className = "edit-btn";
                 editButton.addEventListener("click", function () {
                     editNote(index, note);
                 });
                 // Create a delete button for this note.
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
+                deleteButton.className = "delete-btn";
                 deleteButton.addEventListener("click", function () {
                     deleteNote(index);
                 });
