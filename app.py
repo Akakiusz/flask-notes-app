@@ -13,12 +13,11 @@ def home():
 @app.route("/greet", methods=["POST"])
 def greet():
     data = request.get_json()
-    name = data["name"]
-    # Validation: check if the name is empty.
-    if name.strip() == "":
-        return jsonify({"message": "Name cannot be empty."}), 400
-    
-        # Save the note to a text file (append mode).
+    note = data["name"]
+    # Validation: check if the note is empty.
+    if note.strip() == "":
+        return jsonify({"message": "Note cannot be empty."}), 400
+    # Save the note to a text file (append mode).
     with open("notes.txt", "a") as file:
         file.write(note + "\n")
     # Return a JSON response indicating success.
