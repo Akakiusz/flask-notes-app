@@ -2,6 +2,8 @@
 const button = document.getElementById("sendButton");
 const input = document.getElementById("userInput");
 const responseArea = document.getElementById("response");
+// Find the notes list by its id.
+const notesList = document.getElementById("notesList");
 
 // When the button is clicked, run this function.
 button.addEventListener("click", function () {
@@ -10,7 +12,7 @@ button.addEventListener("click", function () {
 
      // Validation: check if the field is empty.
     if (name.trim() === "") {
-        responseArea.textContent = "Please enter your name.";
+        responseArea.textContent = "Please enter your note.";
         return;
     }
 
