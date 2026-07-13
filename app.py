@@ -35,5 +35,31 @@ def get_notes():
         notes = []
     return jsonify({"notes": notes})
 
+# Route that deletes a note by its position (index).
+@app.route("/delete", methods=["POST"])
+def delete_note():
+    data = request.get_json()
+    index = data["index"]
+
+    # Read all notes from the file.
+    notes = []
+    try:
+        with open("notes.txt", "r") as file:
+            for line in file:
+                notes.append(line.strip())
+    except FileNotFoundError:
+        notes = []
+
+    # Remove the note at the given index (if it exists).
+    if 0 <= index < len(notes):
+        notes.pop(index)
+
+    # Write the remaining notes back to the file.
+    with open("notes.txt", "w") as file:
+        for note in notes:
+            file.write(note + "\n")
+
+    return jsonify({"message": "Note deleted."})
+
 if __name__ == "__main__":
     app.run(debug=True)
