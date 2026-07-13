@@ -46,6 +46,12 @@ function loadNotes() {
                 const li = document.createElement("li");
                 li.textContent = note;
 
+                  // Create an edit button for this note.
+                const editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+                editButton.addEventListener("click", function () {
+                    editNote(index, note);
+                });
                 // Create a delete button for this note.
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
@@ -54,6 +60,7 @@ function loadNotes() {
                 });
 
                 // Add the button to the list item.
+                li.appendChild(editButton);
                 li.appendChild(deleteButton);
                 notesList.appendChild(li);
             });
@@ -72,6 +79,30 @@ function deleteNote(index) {
         })
         .then(function (data) {
             // Refresh the list after deleting.
+            loadNotes();
+        });
+}
+
+// Function that asks for new text and tells the backend to edit a note.
+function editNote(index, oldText) {
+    // Show a small window to enter the new text (pre-filled with the old one).
+    const newText = prompt("Edit your note:", oldText);
+
+    // If the user clicked Cancel, prompt returns null — do nothing.
+    if (newText === null) {
+        return;
+    }
+
+    fetch("/edit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ index: index, new_text: newText })
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            // Refresh the list after editing.
             loadNotes();
         });
 }
