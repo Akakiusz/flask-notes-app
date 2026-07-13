@@ -1,11 +1,13 @@
 /* Style for the body */
 body {
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    min-height: 100vh;
     font-family: Arial, sans-serif;
     max-width: 500px;
     margin: 40px auto;
     padding: 20px;
 }
+
 /* Style for the text input */
 input {
     width: 100%;
@@ -15,6 +17,14 @@ input {
     border-radius: 5px;
     box-sizing: border-box;
 }
+
+/* Highlight the input field when clicked */
+input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
 /* Style for buttons */
 button {
     margin-top: 10px;
@@ -26,6 +36,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+
 /* Style for each note in the list */
 #notesList li {
     background-color: white;
@@ -36,7 +47,9 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 /* Shared style for buttons inside the notes list */
 #notesList button {
     margin-left: 10px;
