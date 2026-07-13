@@ -10,7 +10,7 @@ button.addEventListener("click", function () {
     // Read the text the user typed.
     const name = input.value;
 
-     // Validation: check if the field is empty.
+    // Validation: check if the field is empty.
     if (name.trim() === "") {
         responseArea.textContent = "Please enter your note.";
         return;
@@ -22,12 +22,33 @@ button.addEventListener("click", function () {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: name })
     })
-        // Take the backend's answer and turn it from JSON into usable data.
         .then(function (response) {
             return response.json();
         })
-        // Show the message on the page.
         .then(function (data) {
             responseArea.textContent = data.message;
+            input.value = "";      // clear the input field
+            loadNotes();           // refresh the notes list
         });
 });
+
+// Function that loads all notes from the backend and shows them.
+function loadNotes() {
+    fetch("/notes")
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            // Clear the list first.
+            notesList.innerHTML = "";
+            // Add each note as a list item.
+            data.notes.forEach(function (note) {
+                const li = document.createElement("li");
+                li.textContent = note;
+                notesList.appendChild(li);
+            });
+        });
+}
+
+// Load notes when the page opens.
+loadNotes();
