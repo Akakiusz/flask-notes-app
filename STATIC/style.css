@@ -1,3 +1,4 @@
+/* Style for the body */
 body {
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
@@ -5,7 +6,7 @@ body {
     margin: 40px auto;
     padding: 20px;
 }
-
+/* Style for the notes list */
 input {
     width: 100%;
     padding: 10px;
@@ -13,4 +14,15 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+}
+/* Style for buttons */
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
